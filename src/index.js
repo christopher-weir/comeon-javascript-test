@@ -33,7 +33,7 @@ $( document ).ready( function() {
          * @param  {object}     _player - TODO: handle relogin with new player
          */
         reloadCasino: function( _player ) {
-            $( '.casino' ).casino( 'reInit', _player );
+            $( '.casino' ).casino( 'reset', _player );
         },
 
 

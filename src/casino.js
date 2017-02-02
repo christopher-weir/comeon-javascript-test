@@ -32,7 +32,7 @@
 
 
     /**
-     * Ajaz call the cats and return a promise
+     * Ajax call the cats and return a promise
      * @method getCategories
      */
     var getCategories = function( ) {
@@ -70,7 +70,7 @@
 
 
     /**
-     * Ajaz call the games and return a promise
+     * Ajax call the games and return a promise
      * @method getGames
      */
     var getGames = function( ) {
@@ -146,7 +146,12 @@
     };
 
 
-    Plugin.prototype.reInit = function( _player ) {
+    /**
+     * reset the casino state
+     * @method reset
+     * @param  {object} _player - new player data
+     */
+    Plugin.prototype.reset = function( _player ) {
         var _this = this;
 
         $( _this.element ).show();
@@ -171,6 +176,7 @@
     };
 
 
+    // init the cats
     Plugin.prototype.initCategories = function( ) {
         var _this = this;
 
@@ -181,6 +187,7 @@
     };
 
 
+    // init the games
     Plugin.prototype.initGames = function( ) {
         var _this = this;
 
@@ -198,12 +205,18 @@
     };
 
 
+    // Open a game
     Plugin.prototype.openGame = function( _game ) {
         $( this.element ).hide();
         this.options.openGame( _game );
     };
 
 
+    /**
+     * Handle the user logout press,
+     * keep this public incase you need to use this somewhere else
+     * @method logout
+     */
     Plugin.prototype.logout = function() {
         var _this = this;
 
@@ -219,16 +232,28 @@
     };
 
 
+    /**
+     * initialise the filter on the search box
+     * @method initFilter
+     */
     Plugin.prototype.initFilter = function( ) {
+
         var _this = this;
         var elm = $( _this.element );
-        elm.find( '.search input' ).keyup( function() {
-            var valThis = $( this ).val();
 
+        elm.find( '.search input' ).keyup( function() {
+
+            // get the current search input
+            var query = $( this ).val();
+
+            // loop through the list of games
             elm.find( '.game.items .item' ).each( function() {
+
+                // store game text
                 var text = $( this ).find( '.name' ).text().toLowerCase();
 
-                return ( text.indexOf( valThis ) === 0 ) ? $( this ).show() : $( this ).hide();
+                // if the query is in the text show it, otherwise hide
+                return ( text.indexOf( query ) === 0 ) ? $( this ).show() : $( this ).hide();
             } );
         } );
     };
